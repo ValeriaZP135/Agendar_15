@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/nav_calendar">
+
+    <fragment
+        android:id="@+id/nav_calendar"
+        android:name="com.tecsup.agendar_15.ui.calendar.CalendarFragment"
+        android:label="@string/nav_calendar"
+        tools:layout="@layout/fragment_calendar">
+
+        <action
+            android:id="@+id/action_calendar_to_event_detail"
+            app:destination="@id/nav_event_detail"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_courses"
+        android:name="com.tecsup.agendar_15.ui.courses.CoursesFragment"
+        android:label="@string/nav_courses"
+        tools:layout="@layout/fragment_courses">
+
+        <action
+            android:id="@+id/action_courses_to_course_detail"
+            app:destination="@id/nav_course_detail"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_tasks"
+        android:name="com.tecsup.agendar_15.ui.tasks.TasksFragment"
+        android:label="@string/nav_tasks"
+        tools:layout="@layout/fragment_tasks">
+
+        <action
+            android:id="@+id/action_tasks_to_task_detail"
+            app:destination="@id/nav_task_detail"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_profile"
+        android:name="com.tecsup.agendar_15.ui.profile.ProfileFragment"
+        android:label="@string/nav_profile"
+        tools:layout="@layout/fragment_profile" />
+
+    <!-- Fragmentos de detalle -->
+    <fragment
+        android:id="@+id/nav_event_detail"
+        android:name="com.tecsup.agendar_15.ui.calendar.EventDetailFragment"
+        android:label="Detalle del Evento"
+        tools:layout="@layout/fragment_event_detail">
+
+        <argument
+            android:name="eventId"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_course_detail"
+        android:name="com.tecsup.agendar_15.ui.courses.CourseDetailFragment"
+        android:label="Detalle del Curso"
+        tools:layout="@layout/fragment_course_detail">
+
+        <argument
+            android:name="courseId"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_task_detail"
+        android:name="com.tecsup.agendar_15.ui.tasks.TaskDetailFragment"
+        android:label="Detalle de la Tarea"
+        tools:layout="@layout/fragment_task_detail">
+
+        <argument
+            android:name="taskId"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
+</navigation>
