@@ -1,7 +1,7 @@
 package com.tecsup.agendar_15.utils
 
-import android.app.Activity
 import android.animation.*
+import android.app.Activity
 import android.content.Context
 import android.os.Build
 import android.util.TypedValue
@@ -11,6 +11,7 @@ import androidx.core.view.ViewCompat
 
 object AnimationUtils {
 
+    // NUEVO: Método para transiciones de actividad
     fun overrideActivityTransition(activity: Activity, enterAnim: Int, exitAnim: Int) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
             // API 34+ - Usar el nuevo método
@@ -130,7 +131,6 @@ object AnimationUtils {
             })
     }
 
-    // FIX: Corrección del método addRippleEffect
     fun addRippleEffect(view: View) {
         val context = view.context
         val typedValue = TypedValue()

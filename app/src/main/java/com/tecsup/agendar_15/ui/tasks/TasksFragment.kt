@@ -51,7 +51,7 @@ class TasksFragment : Fragment() {
 
     private fun setupViewModel() {
         prefsManager = PreferencesManager(requireContext())
-        val userId = prefsManager.userId ?: return
+        val userId = prefsManager.userId ?: "temp-user-id" // ID temporal para testing
 
         val database = AgendarDatabase.getDatabase(requireContext())
         val repository = AgendarRepository(
@@ -68,15 +68,14 @@ class TasksFragment : Fragment() {
     private fun setupRecyclerView() {
         taskAdapter = TaskAdapter(
             onTaskClick = { tarea ->
-                // Navegar a detalle de tarea
-                // TODO: Implementar navegación
+                // TODO: Navegar a detalle de tarea
+                Snackbar.make(binding.root, "Tarea: ${tarea.titulo}", Snackbar.LENGTH_SHORT).show()
             },
             onTaskCompleted = { tarea ->
                 viewModel.markTaskCompleted(tarea)
                 showCompletionFeedback()
             },
             onTaskLongClick = { tarea ->
-                // Mostrar menú contextual
                 showTaskContextMenu(tarea)
             }
         )
@@ -89,7 +88,7 @@ class TasksFragment : Fragment() {
     }
 
     private fun setupFilters() {
-        // CORRECCIÓN: Usar setOnCheckedStateChangeListener
+        // Usar setOnCheckedStateChangeListener para evitar deprecation warning
         binding.chipGroupFilters.setOnCheckedStateChangeListener { group, checkedIds ->
             val checkedId = if (checkedIds.isNotEmpty()) checkedIds.first() else View.NO_ID
 
@@ -141,12 +140,11 @@ class TasksFragment : Fragment() {
             ): Boolean = false
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                // CORRECCIÓN: Usar bindingAdapterPosition
+                // Usar bindingAdapterPosition para evitar deprecation warning
                 val position = viewHolder.bindingAdapterPosition
-                val tarea = taskAdapter.currentList[position]
+                if (position != RecyclerView.NO_POSITION) {
+                    val tarea = taskAdapter.currentList[position]
 
-                // Animación de deslizamiento
-                AnimationUtils.slideOutToBottom(viewHolder.itemView) {
                     viewModel.deleteTask(tarea)
 
                     // Snackbar con opción de deshacer
@@ -179,6 +177,7 @@ class TasksFragment : Fragment() {
 
     private fun showTaskContextMenu(tarea: com.tecsup.agendar_15.data.database.entities.Tarea) {
         // TODO: Implementar menú contextual con opciones: Editar, Eliminar, Duplicar
+        Snackbar.make(binding.root, "Menú contextual: ${tarea.titulo}", Snackbar.LENGTH_SHORT).show()
     }
 
     private fun showEmptyState() {
@@ -193,7 +192,9 @@ class TasksFragment : Fragment() {
 
     private fun startAnimations() {
         // Animación de filtros
-        AnimationUtils.slideInFromBottom(binding.chipGroupFilters.parent as View, 400)
+        binding.chipGroupFilters.parent?.let { parent ->
+            AnimationUtils.slideInFromBottom(parent as View, 400)
+        }
 
         // Animación del RecyclerView
         binding.recyclerViewTasks.alpha = 0f

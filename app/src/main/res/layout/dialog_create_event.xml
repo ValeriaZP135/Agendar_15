@@ -14,7 +14,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Nueva Tarea"
+            android:text="Nuevo Evento"
             android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="@color/text_primary"
@@ -22,14 +22,14 @@
             android:gravity="center" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilTaskTitle"
+            android:id="@+id/tilEventTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Título de la tarea"
+            android:hint="Título del evento"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etTaskTitle"
+                android:id="@+id/etEventTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLines="1"
@@ -37,7 +37,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilTaskDescription"
+            android:id="@+id/tilEventDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -45,13 +45,29 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etTaskDescription"
+                android:id="@+id/etEventDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minLines="3"
-                android:maxLines="5"
+                android:minLines="2"
+                android:maxLines="4"
                 android:inputType="textMultiLine|textCapSentences"
                 android:gravity="top" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="Ubicación (opcional)"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:inputType="textCapSentences" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Selector de curso -->
@@ -64,18 +80,40 @@
             android:textStyle="bold"
             android:textColor="@color/text_primary" />
 
-        <Spinner
-            android:id="@+id/spinnerCourse"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginTop="8dp" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
 
-        <!-- Fecha de vencimiento -->
+            <Spinner
+                android:id="@+id/spinnerCourse"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="Color: " />
+
+            <View
+                android:id="@+id/viewSelectedColor"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="8dp"
+                android:background="@color/primary" />
+
+        </LinearLayout>
+
+        <!-- Fecha y hora de inicio -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Fecha de vencimiento (opcional)"
+            android:text="Fecha y hora de inicio"
             android:textSize="14sp"
             android:textStyle="bold"
             android:textColor="@color/text_primary" />
@@ -95,7 +133,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etDueDate"
+                    android:id="@+id/etStartDate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:focusable="false"
@@ -112,7 +150,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etDueTime"
+                    android:id="@+id/etStartTime"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:focusable="false"
@@ -122,45 +160,57 @@
 
         </LinearLayout>
 
-        <!-- Prioridad -->
+        <!-- Fecha y hora de fin -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Prioridad"
+            android:text="Fecha y hora de fin"
             android:textSize="14sp"
             android:textStyle="bold"
             android:textColor="@color/text_primary" />
 
-        <com.google.android.material.chip.ChipGroup
-            android:id="@+id/chipGroupPriority"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            app:singleSelection="true">
+            android:orientation="horizontal">
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipPriorityLow"
-                android:layout_width="wrap_content"
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Baja"
-                style="@style/Widget.MaterialComponents.Chip.Choice" />
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                android:hint="Fecha"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipPriorityMedium"
-                android:layout_width="wrap_content"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etEndDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:clickable="true"
+                    android:inputType="none" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Media"
-                style="@style/Widget.MaterialComponents.Chip.Choice" />
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                android:hint="Hora"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipPriorityHigh"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Alta"
-                style="@style/Widget.MaterialComponents.Chip.Choice" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etEndTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:clickable="true"
+                    android:inputType="none" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-        </com.google.android.material.chip.ChipGroup>
+        </LinearLayout>
 
         <!-- Botones -->
         <LinearLayout

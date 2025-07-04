@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     id("kotlin-parcelize")
     alias(libs.plugins.ksp)
+    id ("com.google.devtools.ksp") version "1.8.22-1.0.11"
 }
 
 android {

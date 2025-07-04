@@ -6,8 +6,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.navigation.NavController // Asegúrate de importar NavController
-import androidx.navigation.fragment.NavHostFragment // <--- IMPORTANTE: Importa NavHostFragment
+import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -17,6 +16,9 @@ import com.google.android.material.snackbar.Snackbar
 import com.tecsup.agendar_15.R
 import com.tecsup.agendar_15.databinding.ActivityMainBinding
 import com.tecsup.agendar_15.ui.auth.LoginActivity
+import com.tecsup.agendar_15.ui.dialogs.CreateEventDialogFragment
+import com.tecsup.agendar_15.ui.dialogs.CreateCourseDialogFragment
+import com.tecsup.agendar_15.ui.dialogs.CreateTaskDialogFragment
 import com.tecsup.agendar_15.utils.AnimationUtils
 import com.tecsup.agendar_15.utils.PreferencesManager
 
@@ -25,7 +27,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
     private lateinit var prefsManager: PreferencesManager
-    private lateinit var navController: NavController // <--- Decláralo a nivel de clase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,13 +40,7 @@ class MainActivity : AppCompatActivity() {
 
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
-
-        // --- CAMBIO CLAVE AQUÍ ---
-        // Obtener el NavHostFragment a través del FragmentManager
-        // y luego su NavController.
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        navController = navHostFragment.navController
-        // -------------------------
+        val navController = findNavController(R.id.nav_host_fragment)
 
         appBarConfiguration = AppBarConfiguration(
             setOf(
@@ -70,7 +65,7 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 else -> {
-                    // Ya tenemos navController disponible como propiedad de la clase
+                    val navController = findNavController(R.id.nav_host_fragment)
                     navController.navigate(menuItem.itemId)
                     binding.drawerLayout.closeDrawers()
                     true
@@ -94,7 +89,8 @@ class MainActivity : AppCompatActivity() {
             // Animación del FAB
             AnimationUtils.pulse(binding.fabAdd, 1.2f, 200)
 
-            // Ya tenemos navController disponible como propiedad de la clase
+            // Determinar qué diálogo mostrar basado en el fragment actual
+            val navController = findNavController(R.id.nav_host_fragment)
             when (navController.currentDestination?.id) {
                 R.id.nav_calendar -> {
                     showCreateEventDialog()
@@ -106,7 +102,7 @@ class MainActivity : AppCompatActivity() {
                     showCreateTaskDialog()
                 }
                 else -> {
-                    Snackbar.make(binding.root, "Función no disponible en esta sección", Snackbar.LENGTH_SHORT).show()
+                    Snackbar.make(binding.root, "Navega a una sección para crear elementos", Snackbar.LENGTH_SHORT).show()
                 }
             }
         }
@@ -128,18 +124,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showCreateEventDialog() {
-        // TODO: Implementar diálogo de crear evento
-        Snackbar.make(binding.root, "Crear evento - Por implementar", Snackbar.LENGTH_SHORT).show()
+        val dialog = CreateEventDialogFragment()
+        dialog.show(supportFragmentManager, "CreateEventDialog")
     }
 
     private fun showCreateCourseDialog() {
-        // TODO: Implementar diálogo de crear curso
-        Snackbar.make(binding.root, "Crear curso - Por implementar", Snackbar.LENGTH_SHORT).show()
+        val dialog = CreateCourseDialogFragment()
+        dialog.show(supportFragmentManager, "CreateCourseDialog")
     }
 
     private fun showCreateTaskDialog() {
-        // TODO: Implementar diálogo de crear tarea
-        Snackbar.make(binding.root, "Crear tarea - Por implementar", Snackbar.LENGTH_SHORT).show()
+        val dialog = CreateTaskDialogFragment()
+        dialog.show(supportFragmentManager, "CreateTaskDialog")
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -150,7 +146,6 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_settings -> {
-                // TODO: Abrir configuración
                 Snackbar.make(binding.root, "Configuración - Por implementar", Snackbar.LENGTH_SHORT).show()
                 true
             }
@@ -159,7 +154,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        // Ya tenemos navController disponible como propiedad de la clase
+        val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 }

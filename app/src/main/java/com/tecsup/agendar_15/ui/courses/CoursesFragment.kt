@@ -45,7 +45,7 @@ class CoursesFragment : Fragment() {
 
     private fun setupViewModel() {
         prefsManager = PreferencesManager(requireContext())
-        val userId = prefsManager.userId ?: return
+        val userId = prefsManager.userId ?: "temp-user-id" // ID temporal si no hay usuario
 
         val database = AgendarDatabase.getDatabase(requireContext())
         val repository = AgendarRepository(
