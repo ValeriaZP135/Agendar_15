@@ -6,7 +6,8 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.navigation.findNavController
+import androidx.navigation.NavController // Asegúrate de importar NavController
+import androidx.navigation.fragment.NavHostFragment // <--- IMPORTANTE: Importa NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -24,6 +25,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
     private lateinit var prefsManager: PreferencesManager
+    private lateinit var navController: NavController // <--- Decláralo a nivel de clase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +39,13 @@ class MainActivity : AppCompatActivity() {
 
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
-        val navController = findNavController(R.id.nav_host_fragment)
+
+        // --- CAMBIO CLAVE AQUÍ ---
+        // Obtener el NavHostFragment a través del FragmentManager
+        // y luego su NavController.
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        navController = navHostFragment.navController
+        // -------------------------
 
         appBarConfiguration = AppBarConfiguration(
             setOf(
@@ -62,8 +70,7 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 else -> {
-                    // Manejo normal de navegación
-                    val navController = findNavController(R.id.nav_host_fragment)
+                    // Ya tenemos navController disponible como propiedad de la clase
                     navController.navigate(menuItem.itemId)
                     binding.drawerLayout.closeDrawers()
                     true
@@ -87,8 +94,7 @@ class MainActivity : AppCompatActivity() {
             // Animación del FAB
             AnimationUtils.pulse(binding.fabAdd, 1.2f, 200)
 
-            // Determinar qué diálogo mostrar basado en el fragment actual
-            val navController = findNavController(R.id.nav_host_fragment)
+            // Ya tenemos navController disponible como propiedad de la clase
             when (navController.currentDestination?.id) {
                 R.id.nav_calendar -> {
                     showCreateEventDialog()
@@ -153,7 +159,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment)
+        // Ya tenemos navController disponible como propiedad de la clase
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 }
