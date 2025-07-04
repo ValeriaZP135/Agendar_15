@@ -99,21 +99,45 @@ class LoginActivity : AppCompatActivity() {
         val email = binding.etEmail.text.toString().trim()
         val password = binding.etPassword.text.toString().trim()
 
-        if (email.isEmpty() || password.isEmpty()) {
-            Toast.makeText(this, "Por favor completa todos los campos", Toast.LENGTH_SHORT).show()
+        // 1. Validaciones de entrada
+        var hasError = false
+
+        if (email.isEmpty()) {
+            binding.tilEmail.error = "El correo no puede estar vacío"
+            hasError = true
+        } else if (!isValidEmail(email)) { // Función auxiliar para validar formato de email
+            binding.tilEmail.error = "Formato de correo inválido"
+            hasError = true
+        } else {
+            binding.tilEmail.error = null // Limpia el error si todo está bien
+        }
+
+        if (password.isEmpty()) {
+            binding.tilPassword.error = "La contraseña no puede estar vacía"
+            hasError = true
+        } else {
+            binding.tilPassword.error = null // Limpia el error si todo está bien
+        }
+
+        if (hasError) {
+            // Muestra un Toast genérico solo si hay errores que no se muestran en los campos
+            // O simplemente retorna, ya que los errores están en los campos
+            Toast.makeText(this, "Por favor corrige los errores", Toast.LENGTH_SHORT).show()
             return
         }
 
-        // Animación del botón durante carga
+        // 2. Animación del botón durante carga
         binding.btnLogin.isEnabled = false
         binding.btnLogin.text = "Iniciando..."
 
+        // 3. Llamada al ViewModel para iniciar sesión
         viewModel.login(email, password) { usuario ->
             runOnUiThread {
-                binding.btnLogin.isEnabled = true
-                binding.btnLogin.text = "Iniciar Sesión"
+                binding.btnLogin.isEnabled = true // Siempre re-habilitar el botón
+                binding.btnLogin.text = "Iniciar Sesión" // Restaurar texto
 
                 if (usuario != null) {
+                    // Inicio de sesión exitoso
                     prefsManager.isLoggedIn = true
                     prefsManager.userId = usuario.id
 
@@ -122,13 +146,19 @@ class LoginActivity : AppCompatActivity() {
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
                     AnimationUtils.overrideActivityTransition(this, android.R.anim.fade_in, android.R.anim.fade_out)
-                    finish()
+                    finish() // Cierra la actividad de login
                 } else {
+                    // Credenciales incorrectas
                     Toast.makeText(this, "Credenciales incorrectas", Toast.LENGTH_SHORT).show()
-                    // Animación de error
+                    // Animación de error en el campo de contraseña
                     AnimationUtils.pulse(binding.tilPassword, 1.1f, 300)
                 }
             }
         }
+    }
+
+    // Función auxiliar para validar el formato de correo electrónico
+    private fun isValidEmail(email: String): Boolean {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 }
