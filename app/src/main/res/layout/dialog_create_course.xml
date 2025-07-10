@@ -4,45 +4,46 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="20dp"
-    android:background="@drawable/dialog_background">
+    android:padding="20dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@drawable/dialog_background"
+        android:padding="20dp">
 
-        <!-- Título del diálogo -->
+        <!-- Título -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Nueva Tarea"
+            android:text="Nuevo Curso"
             android:textSize="24sp"
             android:textStyle="bold"
             android:textColor="@color/text_primary"
             android:gravity="center"
             android:layout_marginBottom="20dp" />
 
-        <!-- Título de la tarea -->
+        <!-- Nombre del curso -->
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilTaskTitle"
+            android:id="@+id/tilCourseName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Título de la tarea"
-            app:startIconDrawable="@drawable/ic_task"
+            android:hint="Nombre del curso"
+            app:startIconDrawable="@drawable/ic_book"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etTaskTitle"
+                android:id="@+id/etCourseName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLines="1"
-                android:inputType="textCapSentences" />
+                android:inputType="textCapWords" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Descripción -->
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilTaskDescription"
+            android:id="@+id/tilCourseDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
@@ -50,123 +51,125 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etTaskDescription"
+                android:id="@+id/etCourseDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minLines="3"
-                android:maxLines="5"
-                android:inputType="textMultiLine|textCapSentences"
-                android:gravity="top" />
+                android:minLines="2"
+                android:maxLines="4"
+                android:inputType="textMultiLine|textCapSentences" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Curso -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Curso (opcional)"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:textColor="@color/text_primary" />
-
-        <Spinner
-            android:id="@+id/spinnerCourse"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginTop="8dp" />
-
-        <!-- Fecha y hora -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Fecha de vencimiento (opcional)"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:textColor="@color/text_primary" />
-
+        <!-- Profesor y Aula en la misma fila -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="12dp"
             android:orientation="horizontal">
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilProfessor"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginEnd="8dp"
-                android:hint="Fecha"
+                android:hint="Profesor"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etDueDate"
+                    android:id="@+id/etProfessor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:focusable="false"
-                    android:clickable="true"
-                    android:inputType="none" />
+                    android:maxLines="1"
+                    android:inputType="textPersonName|textCapWords" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilClassroom"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginStart="8dp"
-                android:hint="Hora"
+                android:hint="Aula"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etDueTime"
+                    android:id="@+id/etClassroom"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:focusable="false"
-                    android:clickable="true"
-                    android:inputType="none" />
+                    android:maxLines="1"
+                    android:inputType="textCapCharacters" />
             </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
 
-        <!-- Prioridad -->
-        <TextView
+        <!-- Créditos -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilCredits"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint="Créditos"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etCredits"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:inputType="number" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Selector de color -->
+        <LinearLayout
+            android:id="@+id/colorPickerSection"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Prioridad"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:textColor="@color/text_primary" />
+            android:layout_marginTop="20dp"
+            android:orientation="vertical">
 
-        <com.google.android.material.chip.ChipGroup
-            android:id="@+id/chipGroupPriority"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            app:singleSelection="true">
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipPriorityLow"
-                android:layout_width="wrap_content"
+            <TextView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Baja"
-                android:checked="true"
-                style="@style/Widget.MaterialComponents.Chip.Choice" />
+                android:text="Color del curso"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_primary"
+                android:layout_marginBottom="12dp" />
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipPriorityMedium"
-                android:layout_width="wrap_content"
+            <!-- Vista previa del color seleccionado -->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Media"
-                style="@style/Widget.MaterialComponents.Chip.Choice" />
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="12dp">
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipPriorityHigh"
-                android:layout_width="wrap_content"
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/colorPreview"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="4dp" />
+
+                <TextView
+                    android:id="@+id/tvSelectedColor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:text="Color seleccionado"
+                    android:textSize="14sp"
+                    android:textColor="@color/text_secondary" />
+
+            </LinearLayout>
+
+            <!-- Grid de colores -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewColors"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Alta"
-                style="@style/Widget.MaterialComponents.Chip.Choice" />
+                android:nestedScrollingEnabled="false" />
 
-        </com.google.android.material.chip.ChipGroup>
+        </LinearLayout>
 
         <!-- Botones -->
         <LinearLayout

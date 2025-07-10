@@ -17,6 +17,9 @@ import com.google.android.material.snackbar.Snackbar
 import com.tecsup.agendar_15.R
 import com.tecsup.agendar_15.databinding.ActivityMainBinding
 import com.tecsup.agendar_15.ui.auth.LoginActivity
+import com.tecsup.agendar_15.ui.dialogs.CreateCourseDialog
+import com.tecsup.agendar_15.ui.dialogs.CreateEventDialog
+import com.tecsup.agendar_15.ui.dialogs.CreateTaskDialog
 import com.tecsup.agendar_15.utils.AnimationUtils
 import com.tecsup.agendar_15.utils.PreferencesManager
 
@@ -127,19 +130,28 @@ class MainActivity : AppCompatActivity() {
             .start()
     }
 
+    private fun showCreateTaskDialog() {
+        val dialog = CreateTaskDialog.newInstance()
+        dialog.show(supportFragmentManager, "CreateTaskDialog")
+
+        // Animación del FAB
+        AnimationUtils.fabMorphToDialog(binding.fabAdd, binding.root, 400)
+    }
+
     private fun showCreateEventDialog() {
-        // TODO: Implementar diálogo de crear evento
-        Snackbar.make(binding.root, "Crear evento - Por implementar", Snackbar.LENGTH_SHORT).show()
+        val dialog = CreateEventDialog.newInstance()
+        dialog.show(supportFragmentManager, "CreateEventDialog")
+
+        // Animación del FAB
+        AnimationUtils.pulse(binding.fabAdd, 1.2f, 200)
     }
 
     private fun showCreateCourseDialog() {
-        // TODO: Implementar diálogo de crear curso
-        Snackbar.make(binding.root, "Crear curso - Por implementar", Snackbar.LENGTH_SHORT).show()
-    }
+        val dialog = CreateCourseDialog.newInstance()
+        dialog.show(supportFragmentManager, "CreateCourseDialog")
 
-    private fun showCreateTaskDialog() {
-        // TODO: Implementar diálogo de crear tarea
-        Snackbar.make(binding.root, "Crear tarea - Por implementar", Snackbar.LENGTH_SHORT).show()
+        // Animación del FAB
+        AnimationUtils.pulse(binding.fabAdd, 1.2f, 200)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
